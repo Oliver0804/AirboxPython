@@ -62,9 +62,9 @@ class SerialtoAirbox:
     ser.close()
 
     
-    if __name__ == "__main__":
-      try:
-        __init__()
-        main()
-      except KeyboardInterrupt:
-        pass
+if __name__ == "__main__":
+  try:
+    __init__()
+    main()
+  except KeyboardInterrupt:
+    pass
