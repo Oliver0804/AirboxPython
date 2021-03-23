@@ -23,8 +23,9 @@ class SerialtoAirbox:
     packet.append(0x0D)
     packet.append(0x0A)
     ser.write(packet)
-  def run(self):
     print (packet)
+  def run(self):
+    print ("run")
     ser.write(packet)
     feedback = ser.read(40)
     print('Data:', feedback)
