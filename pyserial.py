@@ -24,7 +24,7 @@ class SerialtoAirbox:
     packet.append(0x0A)
     ser.write(packet)
     print (packet)
-  def run(self):
+  def main(self):
     print ("run")
     ser.write(packet)
     feedback = ser.read(40)
@@ -60,3 +60,11 @@ class SerialtoAirbox:
     print('air50um:',air50um)
     print('air50um:',air50um)
     ser.close()
+
+    
+    if __name__ == "__main__":
+      try:
+        __init__()
+        main()
+      except KeyboardInterrupt:
+        pass
