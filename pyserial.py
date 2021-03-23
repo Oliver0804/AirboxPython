@@ -65,7 +65,7 @@ class SerialtoAirbox:
     
 if __name__ == "__main__":
   try:
-    __init__()
+    #__init__()
     main()
   except KeyboardInterrupt:
     pass
