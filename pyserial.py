@@ -2,7 +2,7 @@ import serial
 class SerialtoAirbox:
   def __init__(self):
 
-  def main(self):
+def main(self):
     #ser = serial.Serial('/dev/tty.usbserial-14130', # Device name varies
     ser = serial.Serial('/dev/ttyUSB0', # Device name varies
     baudrate = 19200,
