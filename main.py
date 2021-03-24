@@ -25,6 +25,7 @@ packet.append(0x0D)
 packet.append(0x0A)
 print (packet)
 
+sql_cleandb="DELETE FROM Data where TO_DAYS(NOW())-TO_DAYS(time)>7"
 
 #connect mariadb
 conn= mariadb.connect(user="airbox",password="password",host="127.0.0.1",port=3306,database="db_airbox")
