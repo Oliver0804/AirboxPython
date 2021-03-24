@@ -3,6 +3,8 @@ import sys
 import time
 import serial
 
+
+
 #serial 連線
 ser = serial.Serial('/dev/ttyUSB0',baudrate = 19200,bytesize = 8,parity = 'N',stopbits = 1)
 #準備發送資料
@@ -21,8 +23,17 @@ packet.append(0x01)
 packet.append(0x69)
 packet.append(0x0D)
 packet.append(0x0A)
-ser.write(packet)
 print (packet)
+
+
+#connect mariadb
+conn= mariadb.connect(user="airbox",password="password",host="127.0.0.1",port=3306,database="db_airbox")
+cur=conn.cursor()
+cur.execute("select version()")
+data =cur.fetchone()
+#輸出DB版本
+print (data)
+
 while True:
     #發送詢問
     ser.write(packet)
@@ -61,13 +72,6 @@ while True:
     print('air50um:',air50um)
     print('air50um:',air50um)
 
-    #connect mariadb
-    conn= mariadb.connect(user="airbox",password="password",host="127.0.0.1",port=3306,database="db_airbox")
-    cur=conn.cursor()
-    cur.execute("select version()")
-    data =cur.fetchone()
-    #輸出DB版本
-    print (data)
 
     #獲取系統時間
     localtime = time.localtime()
