@@ -6,7 +6,7 @@ import serial
 
 
 #serial 連線
-ser = serial.Serial('/dev/ttyUSB0',baudrate = 19200,bytesize = 8,parity = 'N',stopbits = 1)
+ser = serial.Serial('/dev/ttyUSB0',baudrate = 19200,bytesize = 8,parity = 'N',stopbits = 1,timeout=5000)
 #準備發送資料
 askcmd="\x55\xCD\x47\x00\x00\x00\x00\x00\x00\x01\x69\x0D\x0A"
 packet = bytearray()
@@ -28,6 +28,7 @@ print (packet)
 
 #connect mariadb
 conn= mariadb.connect(user="airbox",password="password",host="127.0.0.1",port=3306,database="db_airbox")
+conn.auto_reconnect=True
 cur=conn.cursor()
 cur.execute("select version()")
 data =cur.fetchone()
@@ -36,8 +37,10 @@ print (data)
 
 while True:
     #發送詢問
-    ser.write(packet)
-
+    if ser.is_open==True:
+        ser.write(packet)
+    else:
+        ser=serial.Serial('/dev/ttyUSB',baudrate=19200,bytesize=8,parity='N',stopbits=1,timeout=5000)
     #接收資料解析
     feedback = ser.read(40)
     print('Data:', feedback)
@@ -71,8 +74,6 @@ while True:
     print('air25um:',air25um)
     print('air50um:',air50um)
     print('air50um:',air50um)
-
-
     #獲取系統時間
     localtime = time.localtime()
     result = time.strftime("%Y-%m-%d %I:%M:%S", localtime)
@@ -81,4 +82,4 @@ while True:
     print(sql_cmd)
     cur.execute(sql_cmd)
     conn.autocommit=True
-    time.sleep(1)
+    time.sleep(10)
