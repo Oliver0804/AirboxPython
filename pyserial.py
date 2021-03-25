@@ -24,7 +24,13 @@ def main(self):
   ser.write(packet)
   print (packet)
   ser.write(packet)
-  feedback = ser.read(40)
+  try:
+      feedback = ser.read(40)
+  except serial.serialutil.SerialException:
+      print('serial except')
+      ser.close()
+      time.sleep(0.2)
+      ser.open()
   print('Data:', feedback)
   pm25=int(feedback[1])*255+int(feedback[2])
   pm10=int(feedback[3])*255+int(feedback[4])
@@ -56,7 +62,7 @@ def main(self):
   print('air25um:',air25um)
   print('air50um:',air50um)
   print('air50um:',air50um)
-  ser.close()
+  #ser.close()
 
     
 if __name__ == "__main__":
